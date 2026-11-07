@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ficha cadastral — Elpee Contabilidade</title><meta name="robots" content="noindex">
+<style>
+:root{--az:#00365d;--az2:#1f4c86;--am:#f6c416;--cz:#5a6a7d;--bg:#f3f5f9;--er:#c0392b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#1d2733;font-size:16px}
+.top{background:#fff;border-bottom:4px solid var(--am);padding:18px 16px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+.top:after{content:"";position:absolute;right:0;top:0;width:170px;height:100%;background:linear-gradient(225deg,var(--az) 0 18%,var(--am) 18% 30%,var(--az2) 30% 52%,transparent 52%)}
+.marca b{display:block;color:var(--az);font-size:30px;line-height:1;letter-spacing:-.5px}.marca small{color:var(--az);letter-spacing:3px;font-weight:bold;font-size:11px}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+h1{color:var(--az);font-size:22px;margin:6px 0 4px}.intro{color:var(--cz);margin:0 0 12px;line-height:1.45}
+.card{background:#fff;border-radius:10px;padding:16px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.08);border-top:4px solid var(--az)}
+.card h2{margin:0 0 10px;font-size:18px;color:var(--az)}
+label{display:block;font-weight:bold;margin:12px 0 4px;font-size:15px}label .o{color:var(--er)}
+.dica{font-weight:normal;color:var(--cz);font-size:13px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #c6cfdb;border-radius:8px;font-size:16px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--am);border-color:var(--az)}
+.row{display:flex;gap:10px}.row>div{flex:1}.row>.p{flex:.45}
+.op{display:flex;flex-wrap:wrap;gap:8px}.op label{font-weight:normal;margin:0;border:1px solid #c6cfdb;border-radius:20px;padding:9px 14px;cursor:pointer;background:#fff}
+.op input{display:none}.op label.on{background:var(--az);color:#fff;border-color:var(--az)}
+.err{border-color:var(--er)!important;background:#fff6f5}.msg{color:var(--er);font-size:13px;margin-top:3px}
+.dep{border:1px dashed #c6cfdb;border-radius:8px;padding:10px;margin-top:10px}
+.hide{display:none}
+button{width:100%;padding:16px;border:0;border-radius:10px;background:var(--az);color:#fff;font-size:18px;font-weight:bold;margin:8px 0 30px}
+button:disabled{opacity:.6}.ok{text-align:center;padding:30px 16px}.ok h2{color:var(--az)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:normal}.chk input{width:22px;height:22px;flex:none;margin-top:2px}
+</style></head><body>
+<div class="top"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M27 4a23 23 0 1 0 22 30" fill="none" stroke="#00365d" stroke-width="6"/><rect x="15" y="22" width="7" height="14" fill="#f6c416"/><rect x="24" y="16" width="7" height="20" fill="#f6c416"/><rect x="33" y="8" width="7" height="28" fill="#f6c416"/></svg>
+<div class="marca"><b>Elpee</b><small>CONTABILIDADE</small></div></div>
+<div class="wrap" id="app">
+<h1>Ficha cadastral</h1>
+<p class="intro">Olá! Esta ficha serve para cadastrarmos quem vai receber pela sua empresa: sócio (pró-labore), funcionário registrado ou profissional autônomo (RPA). Leva poucos minutos. Os campos com <b style="color:#c0392b">*</b> são obrigatórios.</p>
+<form id="f" novalidate>
+
+<div class="card"><h2>Quem está sendo cadastrado?</h2>
+<div class="op" data-name="Tipo" data-req="1"><label><input type="radio" name="Tipo" value="Sócio (pró-labore)">Sócio (pró-labore)</label><label><input type="radio" name="Tipo" value="Empregado (carteira assinada)">Empregado (carteira assinada)</label><label><input type="radio" name="Tipo" value="Autônomo (RPA)">Autônomo (RPA)</label></div>
+<label>Nome da empresa que vai pagar <span class="o">*</span></label><input name="Empresa" data-req="1">
+<label>CNPJ da empresa <span class="o">*</span></label><input name="CNPJ empresa" data-mask="00.000.000/0000-00" data-chk="cnpj" inputmode="numeric" data-req="1"></div>
+
+<div class="card hide" data-show="Tipo=Sócio (pró-labore)"><h2>Sócio — pró-labore</h2>
+<label>Recebe pró-labore a partir de <span class="o">*</span></label><input type="date" name="Início pró-labore" data-req="1">
+<label>Valor mensal do pró-labore <span class="o">*</span></label><input name="Valor pró-labore" data-money="1" inputmode="numeric" placeholder="R$ 0,00" data-req="1"></div>
+
+<div class="card hide" data-show="Tipo=Empregado (carteira assinada)"><h2>Empregado</h2>
+<label>Data de admissão <span class="o">*</span></label><input type="date" name="Admissão" data-req="1">
+<label>Cargo ou função <span class="o">*</span></label><input name="Cargo" data-req="1">
+<label>Salário mensal <span class="o">*</span></label><input name="Salário" data-money="1" inputmode="numeric" placeholder="R$ 0,00" data-req="1">
+<div class="row"><div><label>Entrada <span class="o">*</span></label><input type="time" name="Hora entrada" data-req="1"></div><div><label>Saída <span class="o">*</span></label><input type="time" name="Hora saída" data-req="1"></div></div>
+<div class="row"><div><label>Início do intervalo</label><input type="time" name="Intervalo início"></div><div><label>Fim do intervalo</label><input type="time" name="Intervalo fim"></div></div>
+<label>Dias de trabalho <span class="o">*</span></label><select name="Dias de trabalho" data-req="1"><option value="">Selecione</option><option>Segunda a sexta</option><option>Segunda a sábado</option><option>Escala 12x36</option><option>Outro</option></select>
+<label>Vai usar vale-transporte? <span class="o">*</span></label><div class="op" data-name="Vale-transporte" data-req="1"><label><input type="radio" name="Vale-transporte" value="Sim">Sim</label><label><input type="radio" name="Vale-transporte" value="Não">Não</label></div></div>
+
+<div class="card hide" data-show="Tipo=Autônomo (RPA)"><h2>Autônomo (RPA)</h2>
+<label>Qual serviço foi prestado? <span class="o">*</span></label><textarea name="Serviço" rows="2" data-req="1"></textarea>
+<label>Valor do serviço <span class="o">*</span></label><input name="Valor serviço" data-money="1" inputmode="numeric" placeholder="R$ 0,00" data-req="1">
+<label>Data do pagamento <span class="o">*</span></label><input type="date" name="Data pagamento" data-req="1">
+<label>Tem inscrição na Prefeitura (CCM)? <span class="dica">(autônomos)</span> <span class="o">*</span></label><div class="op" data-name="Tem CCM" data-req="1"><label><input type="radio" name="Tem CCM" value="Sim">Sim</label><label><input type="radio" name="Tem CCM" value="Não">Não</label></div>
+<div class="hide" data-show="Tem CCM=Sim"><label>Número do CCM <span class="o">*</span></label><input name="CCM" inputmode="numeric" data-req="1"></div></div>
+
+<div class="card"><h2>Dados pessoais</h2>
+<label>Nome completo (como no documento) <span class="o">*</span></label><input name="Nome civil" data-req="1" autocomplete="name">
+<label>Nome social <span class="dica">(se usar)</span></label><input name="Nome social">
+<label>CPF <span class="o">*</span></label><input name="CPF" data-mask="000.000.000-00" data-chk="cpf" inputmode="numeric" data-req="1">
+<label>Documento de identidade <span class="o">*</span></label><div class="op" data-name="Tipo documento" data-req="1"><label><input type="radio" name="Tipo documento" value="RG">RG</label><label><input type="radio" name="Tipo documento" value="CNH">CNH</label><label><input type="radio" name="Tipo documento" value="RNM/RNE (estrangeiro)">RNM/RNE (estrangeiro)</label></div>
+<div class="row"><div><label>Número do documento <span class="o">*</span></label><input name="Número documento" data-req="1" style="text-transform:uppercase"></div><div class="p"><label>Órgão emissor <span class="o">*</span></label><input name="Órgão emissor" data-req="1" placeholder="SSP" style="text-transform:uppercase"></div></div>
+<div class="row"><div><label>UF emissora <span class="o">*</span></label><select name="UF emissor" data-uf="1" data-req="1"></select></div><div><label>Data de emissão</label><input type="date" name="Emissão documento"></div></div>
+<label>Data de nascimento <span class="o">*</span></label><input type="date" name="Nascimento" data-req="1">
+<label>Sexo <span class="o">*</span></label><div class="op" data-name="Sexo" data-req="1"><label><input type="radio" name="Sexo" value="Feminino">Feminino</label><label><input type="radio" name="Sexo" value="Masculino">Masculino</label></div>
+<label>Raça/cor <span class="o">*</span></label><select name="Raça/cor" data-req="1"><option value="">Selecione</option><option>Branca</option><option>Preta</option><option>Parda</option><option>Amarela</option><option>Indígena</option><option>Prefiro não informar</option></select>
+<label>Estado civil <span class="o">*</span></label><select name="Estado civil" data-req="1"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option></select>
+<label>Escolaridade <span class="o">*</span></label><select name="Escolaridade" data-req="1"><option value="">Selecione</option><option>Fundamental incompleto</option><option>Fundamental completo</option><option>Médio incompleto</option><option>Médio completo</option><option>Superior incompleto</option><option>Superior completo</option><option>Pós-graduação</option></select>
+<label>Nacionalidade <span class="o">*</span></label><div class="op" data-name="Nacionalidade" data-req="1"><label><input type="radio" name="Nacionalidade" value="Brasileira">Brasileira</label><label><input type="radio" name="Nacionalidade" value="Estrangeira">Estrangeira</label></div>
+<div class="hide" data-show="Nacionalidade=Estrangeira"><label>País de nacionalidade <span class="o">*</span></label><input name="País" list="paises" data-req="1"><label>Data de chegada ao Brasil <span class="o">*</span></label><input type="date" name="Chegada ao Brasil" data-req="1"></div>
+<div class="hide" data-show="Nacionalidade=Brasileira"><div class="row"><div class="p"><label>UF onde nasceu <span class="o">*</span></label><select name="UF nascimento" data-uf="1" data-req="1"></select></div><div><label>Cidade onde nasceu <span class="o">*</span></label><input name="Cidade nascimento" data-req="1"></div></div></div>
+<label>Nome da mãe <span class="o">*</span></label><input name="Mãe" data-req="1">
+<label>Nome do pai</label><input name="Pai">
+<label>PIS/NIT <span class="o">*</span> <span class="dica">(app Meu INSS ou carteira de trabalho digital)</span></label><input name="PIS/NIT" data-mask="000.00000.00-0" data-chk="pis" inputmode="numeric" data-req="1">
+<label>Pessoa com deficiência? <span class="o">*</span></label><div class="op" data-name="PcD" data-req="1"><label><input type="radio" name="PcD" value="Não">Não</label><label><input type="radio" name="PcD" value="Sim">Sim</label></div>
+<div class="hide" data-show="PcD=Sim"><label>Tipo de deficiência <span class="o">*</span></label><select name="Tipo deficiência" data-req="1"><option value="">Selecione</option><option>Física</option><option>Auditiva</option><option>Visual</option><option>Intelectual</option><option>Mental</option><option>Mais de uma</option></select></div>
+<label>Tem registro em conselho profissional? <span class="o">*</span> <span class="dica">(ex.: CRECI, CRC, OAB)</span></label><div class="op" data-name="Conselho" data-req="1"><label><input type="radio" name="Conselho" value="Não">Não</label><label><input type="radio" name="Conselho" value="Sim">Sim</label></div>
+<div class="hide" data-show="Conselho=Sim"><div class="row"><div><label>Conselho <span class="o">*</span></label><input name="Conselho sigla" placeholder="CRECI" data-req="1" style="text-transform:uppercase"></div><div><label>Número <span class="o">*</span></label><input name="Conselho número" data-req="1"></div><div class="p"><label>UF <span class="o">*</span></label><select name="Conselho UF" data-uf="1" data-req="1"></select></div></div></div></div>
+
+<div class="card"><h2>Endereço e contato</h2>
+<label>CEP <span class="o">*</span> <span class="dica">(preenche o endereço sozinho)</span></label><input name="CEP" data-mask="00000-000" inputmode="numeric" data-req="1" id="cep">
+<label>Rua / Avenida <span class="o">*</span></label><input name="Logradouro" data-req="1">
+<div class="row"><div class="p"><label>Número <span class="o">*</span></label><input name="Número" data-req="1"></div><div><label>Complemento</label><input name="Complemento"></div></div>
+<label>Bairro <span class="o">*</span></label><input name="Bairro" data-req="1">
+<div class="row"><div><label>Cidade <span class="o">*</span></label><input name="Cidade" data-req="1"></div><div class="p"><label>UF <span class="o">*</span></label><select name="UF" data-uf="1" data-req="1"></select></div></div>
+<label>Celular com DDD <span class="o">*</span></label><input name="Celular" data-mask="+55 (00) 00000-0000" inputmode="numeric" data-req="1" placeholder="+55 (11) 99999-5555">
+<label>E-mail</label><input type="email" name="E-mail" autocomplete="email"></div>
+
+<div class="card"><h2>INSS em outro lugar</h2><p class="intro">Se a pessoa já paga INSS em outra empresa ou pelo carnê no mesmo mês, o desconto aqui pode ser menor.</p>
+<label>Paga INSS em outro lugar no mesmo mês? <span class="o">*</span></label><div class="op" data-name="INSS outra fonte" data-req="1"><label><input type="radio" name="INSS outra fonte" value="Não">Não</label><label><input type="radio" name="INSS outra fonte" value="Sim, como empregado">Sim, como empregado</label><label><input type="radio" name="INSS outra fonte" value="Sim, como sócio">Sim, como sócio</label><label><input type="radio" name="INSS outra fonte" value="Sim, como autônomo">Sim, como autônomo</label><label><input type="radio" name="INSS outra fonte" value="Sim, pelo carnê (GPS)">Sim, pelo carnê</label></div>
+<div class="hide" data-show="INSS outra fonte=!Não"><label>Nome da outra empresa (ou "carnê") <span class="o">*</span></label><input name="Outra fonte nome" data-req="1">
+<label>CNPJ da outra empresa <span class="dica">(se for empresa)</span></label><input name="Outra fonte CNPJ" data-mask="00.000.000/0000-00" data-chk="cnpj" inputmode="numeric">
+<label>Quanto recebe lá no mês <span class="o">*</span></label><input name="Outra fonte remuneração" data-money="1" inputmode="numeric" placeholder="R$ 0,00" data-req="1">
+<div class="hide" data-show="INSS outra fonte=Sim, pelo carnê (GPS)"><label>Plano do carnê <span class="o">*</span></label><select name="Plano carnê" id="plano" data-req="1"><option value="">Selecione</option><option value="20">Normal (20%)</option><option value="11">Simplificado (11%)</option><option value="5">Baixa renda (5%)</option><option value="?">Não sei</option></select></div><label>INSS pago lá no mês <span class="dica">(calculado automaticamente)</span></label><input name="Outra fonte INSS calculado" id="inssCalc" readonly style="background:#eef2f7"><label>Comprovante da outra fonte <span class="dica">(holerite, recibo ou guia, se tiver)</span></label><input type="file" data-file="Comprovante outra fonte" accept="image/*,application/pdf"></div></div>
+
+<div class="card"><h2>Dependentes para o Imposto de Renda</h2>
+<label>Quantos dependentes? <span class="o">*</span></label><select id="qdep" name="Qtd dependentes" data-req="1"><option value="0">Nenhum</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+<div id="deps"></div></div>
+
+<div class="card"><h2>Dados para pagamento</h2>
+<label>Forma de pagamento <span class="o">*</span></label><div class="op" data-name="Forma pagamento" data-req="1"><label><input type="radio" name="Forma pagamento" value="PIX">PIX</label><label><input type="radio" name="Forma pagamento" value="Transferência">Transferência</label></div>
+<div class="hide" data-show="Forma pagamento=PIX"><label>Tipo de chave <span class="o">*</span></label><select name="Tipo chave PIX" data-req="1"><option value="">Selecione</option><option>CPF</option><option>Celular</option><option>E-mail</option><option>Chave aleatória</option></select><label>Chave PIX <span class="o">*</span></label><input name="Chave PIX" data-req="1"></div>
+<div class="hide" data-show="Forma pagamento=Transferência"><label>Banco <span class="o">*</span></label><select name="Banco" data-req="1"><option value="">Selecione</option><option>Banco do Brasil</option><option>Bradesco</option><option>Caixa</option><option>Itaú</option><option>Santander</option><option>Inter</option><option>Nubank</option><option>C6</option><option>Sicredi</option><option>Sicoob</option><option>Outro</option></select>
+<div class="row"><div><label>Agência <span class="o">*</span></label><input name="Agência" inputmode="numeric" data-req="1"></div><div><label>Conta com dígito <span class="o">*</span></label><input name="Conta" data-req="1"></div></div>
+<label>Tipo de conta <span class="o">*</span></label><select name="Tipo conta" data-req="1"><option value="">Selecione</option><option>Corrente</option><option>Poupança</option><option>Salário</option></select></div></div>
+
+<div class="card"><h2>Fotos dos documentos</h2><p class="intro">Pode tirar foto com o celular. Aceita foto ou PDF.</p>
+<label>Documento de identidade — frente <span class="o">*</span></label><input type="file" data-file="Documento frente" accept="image/*,application/pdf" data-req="1">
+<label>Documento de identidade — verso</label><input type="file" data-file="Documento verso" accept="image/*,application/pdf">
+<label>Comprovante de endereço <span class="o">*</span></label><input type="file" data-file="Comprovante endereço" accept="image/*,application/pdf" data-req="1">
+<div class="hide" data-show="Conselho=Sim"><label>Carteira do conselho profissional</label><input type="file" data-file="Carteira conselho" accept="image/*,application/pdf"></div></div>
+
+<div class="card"><label class="chk"><input type="checkbox" name="LGPD" value="Concordo" data-req="1"><span>Confirmo que as informações são verdadeiras e autorizo o uso apenas para folha de pagamento, eSocial e Receita Federal (Lei 13.709/2018 — LGPD). <span class="o">*</span></span></label></div>
+<button type="submit" id="bt">Enviar ficha</button>
+</form></div>
+<datalist id="paises"><option>Angola</option><option>Argentina</option><option>Bolívia</option><option>Cabo Verde</option><option>Chile</option><option>China</option><option>Colômbia</option><option>Coreia do Sul</option><option>Cuba</option><option>Equador</option><option>Espanha</option><option>Estados Unidos</option><option>França</option><option>Haiti</option><option>Itália</option><option>Japão</option><option>Líbano</option><option>México</option><option>Moçambique</option><option>Paraguai</option><option>Peru</option><option>Portugal</option><option>Reino Unido</option><option>Senegal</option><option>Síria</option><option>Uruguai</option><option>Venezuela</option></datalist>
+<script>
+var UF='AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO'.split(' ');
+document.querySelectorAll('[data-uf]').forEach(function(s){s.innerHTML='<option value="">UF</option>'+UF.map(function(u){return '<option>'+u+'</option>'}).join('')});
+function dig(v){return (v||'').replace(/\D/g,'')}
+function mask(v,m){var d=dig(v),o='',i=0;if(m.indexOf('+55')==0){if(d.indexOf('55')==0)d=d.slice(2);}for(var k=0;k<m.length&&i<d.length;k++){var c=m[k];if(c=='0'){o+=d[i++]}else{o+=c}}if(m.indexOf('+55')==0&&o.length&&o.indexOf('+55')!=0)o='+55 ('+o;return o}
+function money(v){var d=dig(v);if(!d)return'';d=(parseInt(d,10)/100).toFixed(2);var p=d.split('.');return 'R$ '+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+p[1]}
+function cpfOk(c){c=dig(c);if(c.length!=11||/^(\d)\1+$/.test(c))return false;for(var t=9;t<11;t++){var s=0;for(var i=0;i<t;i++)s+=c[i]*(t+1-i);if(((10*s)%11)%10!=c[t])return false}return true}
+function cnpjOk(c){c=dig(c);if(c.length!=14||/^(\d)\1+$/.test(c))return false;var w=[6,5,4,3,2,9,8,7,6,5,4,3,2];for(var t=12;t<14;t++){var s=0;for(var i=0;i<t;i++)s+=c[i]*w[i+13-t];var r=s%11;if((r<2?0:11-r)!=c[t])return false}return true}
+function pisOk(c){c=dig(c);if(c.length!=11||/^(\d)\1+$/.test(c))return false;var w=[3,2,9,8,7,6,5,4,3,2],s=0;for(var i=0;i<10;i++)s+=c[i]*w[i];var r=11-s%11;if(r>9)r=0;return r==c[10]}
+var CHK={cpf:[cpfOk,'CPF inválido'],cnpj:[cnpjOk,'CNPJ inválido'],pis:[pisOk,'PIS/NIT inválido']};
+document.addEventListener('input',function(e){var t=e.target;if(t.dataset.mask){if(t.dataset.mask.indexOf('+55')==0){var d=dig(t.value);if(d.indexOf('55')==0)d=d.slice(2);t.value=d?mask(d,'(00) 00000-0000').replace(/^/,'+55 '):''}else t.value=mask(t.value,t.dataset.mask)}if(t.dataset.money)t.value=money(t.value);if(t.name=='Número documento'){var td=val('Tipo documento');if(td=='RG'&&/^\d/.test(t.value)){var r=t.value.toUpperCase().replace(/[^0-9X]/g,'');t.value=r.length==9?r.replace(/^(\d{2})(\d{3})(\d{3})(.)$/,'$1.$2.$3-$4'):r}}t.classList.remove('err');var m=t.parentNode.querySelector('.msg');if(m)m.remove()});
+function val(n){var r=document.querySelector('[name="'+n+'"]:checked');if(r)return r.value;var e=document.querySelector('[name="'+n+'"]:not([type=radio]):not([type=checkbox])');return e?e.value:''}
+function vis(el){return el.offsetParent!==null}
+function upd(){document.querySelectorAll('.op').forEach(function(o){o.querySelectorAll('label').forEach(function(l){l.classList.toggle('on',l.querySelector('input').checked)})});document.querySelectorAll('[data-show]').forEach(function(b){var p=b.dataset.show.split('='),v=val(p[0]),s=p[1].charAt(0)=='!'?(v&&v!=p[1].slice(1)):v==p[1];b.classList.toggle('hide',!s)})}
+document.addEventListener('change',function(e){upd();if(e.target.id=='qdep')deps()});upd();
+
+var TETO=8475.55,SM=1621.00,FX=[[1621.00,.075],[2902.84,.09],[4354.27,.12],[8475.55,.14]];
+function num(v){var d=dig(v);return d?parseInt(d,10)/100:0}
+function brl(x){return 'R$ '+x.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function calcINSS(){var o=document.getElementById('inssCalc');if(!o)return;var m=val('INSS outra fonte'),r=num(val('Outra fonte remuneração')),v=null;
+if(m=='Sim, como empregado'&&r){var b=Math.min(r,TETO),ant=0;v=0;FX.forEach(function(f){if(b>ant){v+=(Math.min(b,f[0])-ant)*f[1];ant=f[0]}})}
+else if((m=='Sim, como sócio'||m=='Sim, como autônomo')&&r){v=Math.min(r,TETO)*.11}
+else if(m=='Sim, pelo carnê (GPS)'){var p=document.getElementById('plano').value;if(p=='20'&&r)v=Math.min(r,TETO)*.20;else if(p=='11'||p=='5')v=SM*(+p)/100}
+o.value=v==null?'':brl(Math.round(v*100)/100)}
+document.addEventListener('input',calcINSS);document.addEventListener('change',calcINSS);
+function deps(){var n=+document.getElementById('qdep').value,h='';for(var i=1;i<=n;i++){h+='<div class="dep"><b>Dependente '+i+'</b><label>Nome completo <span class="o">*</span></label><input name="Dep'+i+' nome" data-req="1"><div class="row"><div><label>CPF <span class="o">*</span></label><input name="Dep'+i+' CPF" data-mask="000.000.000-00" data-chk="cpf" inputmode="numeric" data-req="1"></div><div><label>Nascimento <span class="o">*</span></label><input type="date" name="Dep'+i+' nascimento" data-req="1"></div></div><label>Parentesco <span class="o">*</span></label><select name="Dep'+i+' parentesco" data-req="1"><option value="">Selecione</option><option>Filho(a) ou enteado(a)</option><option>Cônjuge</option><option>Companheiro(a)</option><option>Pai ou mãe</option><option>Outro</option></select></div>'}document.getElementById('deps').innerHTML=h}
+document.getElementById('cep').addEventListener('input',function(){var c=dig(this.value);if(c.length==8){fetch('https://viacep.com.br/ws/'+c+'/json/').then(function(r){return r.json()}).then(function(j){if(j.erro)return;var f=function(n,v){var e=document.querySelector('[name="'+n+'"]');if(v&&e&&!e.value)e.value=v};f('Logradouro',j.logradouro);f('Bairro',j.bairro);f('Cidade',j.localidade);document.querySelector('[name="UF"]').value=j.uf||'';document.querySelector('[name="Número"]').focus()}).catch(function(){})}});
+function marca(el,txt){el.classList.add('err');var m=document.createElement('div');m.className='msg';m.textContent=txt;(el.closest('.op')||el).insertAdjacentElement('afterend',m)}
+function lerArq(inp){var f=inp.files[0];if(!f)return Promise.resolve(null);return new Promise(function(ok,no){if(f.type.indexOf('image/')==0){var img=new Image(),u=URL.createObjectURL(f);img.onload=function(){var k=Math.min(1,1800/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;c.getContext('2d').drawImage(img,0,0,c.width,c.height);ok({rotulo:inp.dataset.file,nome:f.name.replace(/\.\w+$/,'')+'.jpg',tipo:'image/jpeg',data:c.toDataURL('image/jpeg',.85).split(',')[1]})};img.onerror=no;img.src=u}else{if(f.size>8e6){no('O arquivo '+f.name+' passa de 8 MB.');return}var r=new FileReader();r.onload=function(){ok({rotulo:inp.dataset.file,nome:f.name,tipo:f.type,data:r.result.split(',')[1]})};r.onerror=no;r.readAsDataURL(f)}})}
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();document.querySelectorAll('.msg').forEach(function(m){m.remove()});document.querySelectorAll('.err').forEach(function(m){m.classList.remove('err')});var prim=null;
+document.querySelectorAll('[data-req]').forEach(function(el){if(!vis(el))return;var vazio;if(el.classList.contains('op'))vazio=!val(el.dataset.name);else if(el.type=='checkbox')vazio=!el.checked;else if(el.type=='file')vazio=!el.files.length;else vazio=!el.value.trim();if(vazio){marca(el,'Campo obrigatório');prim=prim||el}});
+document.querySelectorAll('[data-chk]').forEach(function(el){if(vis(el)&&el.value&&!CHK[el.dataset.chk][0](el.value)){marca(el,CHK[el.dataset.chk][1]);prim=prim||el}});
+var cel=document.querySelector('[name="Celular"]');if(cel.value&&dig(cel.value).length<12){marca(cel,'Celular incompleto');prim=prim||cel}
+var ce=document.getElementById('cep');if(ce.value&&dig(ce.value).length!=8){marca(ce,'CEP incompleto');prim=prim||ce}
+if(prim){prim.scrollIntoView({behavior:'smooth',block:'center'});return}
+var campos=[];document.querySelectorAll('#f [name]').forEach(function(el){if(!vis(el)&&!(el.type=='radio'&&vis(el.closest('.op'))))return;if(el.type=='radio'){if(el.checked)campos.push([el.name,el.value])}else if(el.type=='checkbox'){campos.push([el.name,el.checked?el.value:''])}else if(el.type=='date'&&el.value){var p=el.value.split('-');campos.push([el.name,p[2]+'/'+p[1]+'/'+p[0]])}else campos.push([el.name,el.value])});
+var bt=document.getElementById('bt');bt.disabled=true;bt.textContent='Enviando...';
+Promise.all([].slice.call(document.querySelectorAll('[data-file]')).filter(vis).map(lerArq)).then(function(a){fetch('https://script.google.com/macros/s/AKfycbzHmMdCm7JVUoO2WzMy_al1ZEuvKIvfz9jnV37ibpYafUStPXTiP5fGxUHeXQ0v6SOT/exec',{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({campos:campos,arquivos:a.filter(Boolean)})}).then(function(r){return r.json()}).then(function(j){if(j.ok)(function(p){document.getElementById('app').innerHTML='<div class="card ok"><h2>Recebemos a sua ficha!</h2><p>Protocolo <b>'+p+'</b>.</p><p>Obrigado. Se faltar alguma informação, o escritório entra em contato.</p></div>';scrollTo(0,0)})(j.protocolo);else(function(m){bt.disabled=false;bt.textContent='Enviar ficha';alert('Não foi possível enviar agora. Tente de novo em alguns minutos. ('+m+')')})(j.erro||'erro')}).catch(function(e){(function(m){bt.disabled=false;bt.textContent='Enviar ficha';alert('Não foi possível enviar agora. Tente de novo em alguns minutos. ('+m+')')})(e.message||e)})}).catch(function(er){bt.disabled=false;bt.textContent='Enviar ficha';alert(er)})});
+</script></body></html>
